@@ -1,0 +1,15 @@
+.DS_Store
+*.log
+.env*
+!.env.example
+
+# client
+node_modules/
+dist/
+
+# server
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+*.db

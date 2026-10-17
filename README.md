@@ -5,6 +5,34 @@ A web app for store referrals. Customers get coupons at a store or through a fri
 - `client/`: React + Vite + Tailwind (JavaScript), deployed to GitHub Pages.
 - `server/`: FastAPI + SQLite (Python, managed with [uv](https://docs.astral.sh/uv/)), run locally and exposed with ngrok.
 
+## Architecture
+
+```mermaid
+flowchart LR
+    Menu["LINE menu link"] --> Phone["Phone browser"]
+    Phone -->|"1. loads the app"| Pages["GitHub Pages<br/>frontend from client/"]
+    Phone -->|"2. API requests"| Ngrok["ngrok<br/>public HTTPS URL"]
+    Ngrok -->|forwards| API["FastAPI server<br/>server/, on the MacBook"]
+    API --> DB[("SQLite<br/>data.db")]
+    CLI["Operator CLI"] --> DB
+    Push["git push to main<br/>with changes in client/"] -->|"GitHub Actions builds"| Pages
+```
+
+The frontend is static files on GitHub Pages and stays online. The server and database run on the MacBook, and ngrok gives them a public HTTPS address while they are running. Pushing changes in `client/` to `main` rebuilds the live frontend; server changes take effect when the server restarts.
+
+Inside the server, a request flows left to right:
+
+```mermaid
+flowchart LR
+    Req["HTTP request"] --> Routes["routes/<br/>read the request"]
+    Routes --> Rules["rules.py<br/>business rules"]
+    Rules --> Models["models.py<br/>tables"]
+    Models --> DB[("SQLite")]
+    Rules --> Security["security.py<br/>hashing, sessions"]
+    Routes --> Views["views.py, schemas.py<br/>JSON response"]
+    CLI["cli.py"] --> Rules
+```
+
 ## Run locally
 
 ```bash

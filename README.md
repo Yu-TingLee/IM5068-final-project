@@ -59,6 +59,8 @@ The client calls `http://localhost:8000` unless `VITE_API_URL` is set (see `clie
    ngrok http 8000 --url https://<your-domain>.ngrok-free.dev
    ```
 
+   `./run.sh` does both in one terminal.
+
 2. In the GitHub repo, set *Settings → Pages → Source* to **GitHub Actions** and add the Actions variable `API_URL` with the ngrok URL. Pushes to `main` that touch `client/` deploy it.
 
 3. Link pages from elsewhere (e.g. a LINE official account menu) with hash routes: `#/claim`, `#/wallet`, `#/referral`, `#/charity`, `#/about`, `#/join`, `#/store`.

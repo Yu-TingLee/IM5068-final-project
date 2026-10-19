@@ -14,7 +14,6 @@ flowchart LR
     Phone -->|"2. API requests"| Ngrok["ngrok<br/>public HTTPS URL"]
     Ngrok -->|forwards| API["FastAPI server<br/>server/, on the MacBook"]
     API --> DB[("SQLite<br/>data.db")]
-    CLI["Operator CLI"] --> DB
     Push["git push to main<br/>with changes in client/"] -->|"GitHub Actions builds"| Pages
 ```
 
@@ -30,7 +29,6 @@ flowchart LR
     Models --> DB[("SQLite")]
     Rules --> Security["security.py<br/>hashing, sessions"]
     Routes --> Views["views.py, schemas.py<br/>JSON response"]
-    CLI["cli.py"] --> Rules
 ```
 
 ## Run locally
